@@ -71,7 +71,7 @@ module.exports = {
                     var result =spawn.spawnCreep(policy.creep_policy[cur_role].creep_parts, new_name,
                                                                {memory: {role: cur_role}});
                                                                
-                    console.log("spwan:"+new_name + "result:" + result);
+                    console.log("spwan:"+new_name + " result:" + result);
                     last_spwan_result = result; 
                     if(result == ERR_NOT_ENOUGH_ENERGY){
                         wait_for_energy = policy.wait_for_energy;

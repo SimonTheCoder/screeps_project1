@@ -5,8 +5,9 @@ var roleMainteiner = require('role.mainteiner');
 var roleSCV = require('role.SCV');
 var factory = require('factory');
 var scheduler = require('scheduler');
-var policy = require("policy")
-var tower = require("tower")
+var policy = require("policy");
+var tower = require("tower");
+var util = require("util");
 
 module.exports.loop = function () {
 

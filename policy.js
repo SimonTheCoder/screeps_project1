@@ -42,7 +42,7 @@ module.exports = {
         
     },
     wait_for_energy : 60,
-    is_auto_road_build : true,
+    is_auto_road_build : false,
     is_auto_builder_repair_road : false,
     tower_repair_function : false
 

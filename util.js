@@ -1,4 +1,5 @@
 
+
 var util = {
     find_nearest_target : function(creep,target_type,structure_type = null){
         
@@ -32,9 +33,76 @@ var util = {
         return util.find_nearest_target(creep, FIND_STRUCTURES,structure_type);
     },
     
+    hello : function(){
+        console.log("hello."); 
+        return;
+    },
+    
+    destroy_all_road : function(room_name){
+        
+        return; // dangerous method ...
+        var roads = Game.rooms[room_name].find(FIND_STRUCTURES, {filter: obj => obj.structureType == STRUCTURE_ROAD});
+        console.log(roads.length + " found.");
+        for(var i in roads){
+            console.log(roads[i].destroy());
+        }
+        return;
+    },
+    
+    create_all_road : function(room_name,from){
+        
+        //return; // dangerous method ...
+        
+        var targets = Game.rooms[room_name].find(FIND_STRUCTURES, {filter: obj => obj.structureType == STRUCTURE_CONTAINER
+                                                                                    || obj.structureType == STRUCTURE_CONTROLLER   
+                                                                                    || obj.structureType == STRUCTURE_EXTENSION
+                                                                                    || obj.structureType == STRUCTURE_TOWER
+            
+        });
+        var sources = Game.rooms[room_name].find(FIND_SOURCES);
+        
+        //targets = targets.concat(sources);
+        //console.log("found: "+ sources.length + "/"+ targets.length );
+        
+        for(var i in sources){
+            var tpath = PathFinder.search(from.pos, {pos:sources[i].pos,range:1});
+            console.log("source:" + i + tpath.path);
+            for(var j in tpath.path){
+                console.log(tpath.path[j]);
+                console.log(Game.rooms[room_name].createConstructionSite(tpath.path[j],STRUCTURE_ROAD));
+            }
+        }
+        
+        for(var i in targets){
+            var tpath = PathFinder.search(from.pos, {pos:targets[i].pos,range:0});
+            for(var j in tpath.path){
+                Game.rooms[room_name].createConstructionSite(tpath.path[j],STRUCTURE_ROAD);
+            }
+            
+        }
+        
+        return;
+    },
+    
+    create_road : function(room_name,start_id,stop_id){
+        var room =  Game.rooms[room_name];
+        var start = Game.getObjectById(start_id);
+        var stop = Game.getObjectById(stop_id);
+        var tpath = PathFinder.search(start.pos, {pos:stop.pos,range:0});
+
+        for(var j in tpath.path){
+                console.log(tpath.path[j]);
+                console.log(Game.rooms[room_name].createConstructionSite(tpath.path[j],STRUCTURE_ROAD));
+        }
+    },
+    
     mine_energy : function(creep){
         
     }
+    
 };
+
+this.hello = util.hello;
+this.util = util;
 
 module.exports = util

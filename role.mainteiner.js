@@ -18,17 +18,22 @@ module.exports = {
 			var buildings = creep.room.find(FIND_STRUCTURES,
 			                                {filter:(object) => object.hits < object.hitsMax /* && object.structureType != STRUCTURE_WALL*/
 			                                && object.structureType == STRUCTURE_CONTAINER});
+			                                
 			if(buildings.length < 1){
 				buildings = creep.room.find(FIND_STRUCTURES,
-			                                {filter:(object) => object.hits < object.hitsMax && object.structureType != STRUCTURE_WALL});
+			                                {filter:(object) => object.hits < object.hitsMax 
+			                                && (object.structureType != STRUCTURE_WALL/* && object.structureType != STRUCTURE_ROAD*/)});
 			}
+			/*
 			if(buildings.length < 1){
 				buildings = creep.room.find(FIND_STRUCTURES,
 			                                {filter:(object) => object.hits < object.hitsMax});
 			}
+			*/
 			
 			if(buildings.length < 1){
 			    creep.memory.repairing = false;
+				roleHarvester.run(creep);
 			}else{
     			//console.log("need repair found:" + buildings.length + " creep_res:"+creep.store[RESOURCE_ENERGY] + "rept:"+buildings[0].structureType);
     			if(creep.repair(buildings[0]) == ERR_NOT_IN_RANGE) {
