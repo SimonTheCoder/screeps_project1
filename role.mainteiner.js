@@ -24,12 +24,12 @@ module.exports = {
 			                                {filter:(object) => object.hits < object.hitsMax 
 			                                && (object.structureType != STRUCTURE_WALL/* && object.structureType != STRUCTURE_ROAD*/)});
 			}
-			/*
+			
 			if(buildings.length < 1){
 				buildings = creep.room.find(FIND_STRUCTURES,
 			                                {filter:(object) => object.hits < object.hitsMax});
 			}
-			*/
+			
 			
 			if(buildings.length < 1){
 			    creep.memory.repairing = false;

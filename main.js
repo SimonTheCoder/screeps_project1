@@ -2,6 +2,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleMainteiner = require('role.mainteiner');
+var roleClaimer = require('role.claimer');
 var roleSCV = require('role.SCV');
 var factory = require('factory');
 var scheduler = require('scheduler');
@@ -25,17 +26,24 @@ module.exports.loop = function () {
             }
         }
         
-        if(creep.memory.role == 'harvester') {
+        if(util.emergency_mode){
             roleHarvester.run(creep);
-        }
-        if(creep.memory.role == 'upgrader') {
-            roleUpgrader.run(creep);
-        }
-        if(creep.memory.role == 'builder') {
-            roleBuilder.run(creep);
-        }
-        if(creep.memory.role == 'mainteiner') {
-            roleMainteiner.run(creep);
+        }else{
+            if(creep.memory.role == 'harvester') {
+                roleHarvester.run(creep);
+            }
+            if(creep.memory.role == 'upgrader') {
+                roleUpgrader.run(creep);
+            }
+            if(creep.memory.role == 'builder') {
+                roleBuilder.run(creep);
+            }
+            if(creep.memory.role == 'mainteiner') {
+                roleMainteiner.run(creep);
+            }
+            if(creep.memory.role== 'claimer'){
+                roleClaimer.run(creep);
+            }
         }
     }
 

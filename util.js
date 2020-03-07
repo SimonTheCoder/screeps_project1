@@ -29,8 +29,29 @@ var util = {
             return nearest;
         
     },
+    find_nearest_target_in_room : function(room, my_pos, find_type, opt){
+        var sources = room.find(find_type,opt);
+            if(sources.length < 1) return null;
+            var nearest = sources[0];
+            var nearest_dist = 99999999;
+            for(var src_index in sources){
+                var src = sources[src_index];
+                var calc_dist = Math.pow(src.pos.x - my_pos.x,2) + Math.pow(src.pos.y - my_pos.y,2);
+                //console.log("dist*dist:" + calc_dist);
+                if(calc_dist < nearest_dist){
+                    nearest_dist = calc_dist;
+                    nearest = src;
+                }
+            }
+            
+            return nearest;
+    },
     find_nearest_sturcture : function(creep,structure_type){
         return util.find_nearest_target(creep, FIND_STRUCTURES,structure_type);
+    },
+    
+    find_creeps_near_target : function(target,distance){
+        return target.pos.findInRange(FIND_CREEPS, distance);
     },
     
     hello : function(){
@@ -55,7 +76,7 @@ var util = {
         
         var targets = Game.rooms[room_name].find(FIND_STRUCTURES, {filter: obj => obj.structureType == STRUCTURE_CONTAINER
                                                                                     || obj.structureType == STRUCTURE_CONTROLLER   
-                                                                                    || obj.structureType == STRUCTURE_EXTENSION
+                                                                                   /* || obj.structureType == STRUCTURE_EXTENSION*/
                                                                                     || obj.structureType == STRUCTURE_TOWER
             
         });
@@ -95,6 +116,7 @@ var util = {
                 console.log(Game.rooms[room_name].createConstructionSite(tpath.path[j],STRUCTURE_ROAD));
         }
     },
+    
     
     mine_energy : function(creep){
         

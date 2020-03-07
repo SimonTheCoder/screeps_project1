@@ -23,7 +23,7 @@ var roleUpgrader = {
         else {
             var container = util.find_nearest_sturcture(creep,STRUCTURE_CONTAINER);
             //console.log(container.store[RESOURCE_ENERGY])
-            if(container != null && container.store[RESOURCE_ENERGY] > creep.store.getFreeCapacity())
+            if(container != null && container.store[RESOURCE_ENERGY] > 1)
             {
                 
                 var withdraw_result = creep.withdraw(container, RESOURCE_ENERGY)
@@ -34,10 +34,10 @@ var roleUpgrader = {
                 
             }else{
             
-                var sources = creep.room.find(FIND_SOURCES);
-                //console.log("===");
-                if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+                var sourcesite = creep.pos.findClosestByPath( creep.room.find(FIND_SOURCES));
+                //console.log("==="+sourcesite);
+                if(creep.harvest(sourcesite) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(sourcesite, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
         }

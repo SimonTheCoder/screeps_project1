@@ -17,15 +17,20 @@ var roleBuilder = {
         }
         //no building target ,temp as harvester
         if(targets.length < 1) {
-            if(auto_road_result == ERR_INVALID_TARGET && creep.store[RESOURCE_ENERGY] > 0 && policy.is_auto_builder_repair_road == true){
-                var nearests = creep.room.find(FIND_STRUCTURES);
+            if(creep.store[RESOURCE_ENERGY] > 0 && policy.is_auto_builder_repair_road == true){
+                var nearests = creep.room.find(FIND_STRUCTURES, {filter: obj => obj.structureType == STRUCTURE_ROAD 
+                                                                    && obj.pos.x == creep.pos.x && obj.pos.y == creep.pos.y
+                                                                    && obj.hits < obj.hitsMax
+                                                                });
                 if(nearests.length >0){
                     creep.repair(nearests[0]);
                     //console.log(creep.name + " is reqairing " + nearests[0].structureType);
                 }
                 
             }
+           
             roleHarvester.run(creep);
+ 
             return;
         }
 
@@ -44,6 +49,8 @@ var roleBuilder = {
                 if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
+            }else{
+                roleHarvester.run(creep);
             }
         }
         else {
